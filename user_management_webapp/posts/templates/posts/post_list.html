@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}UserStack - AllPost{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between mb-3">
+        <h2 class='text-center'><span class='text-warning fst-italic'>UserStack</span> Post</h2>
+
+        <form class="d-flex" method='get' action="{% url 'post_list' %}" id='search_form'>
+            <input class="form-control me-2" type="search" name="q" id='search_input' placeholder="Search by title..." aria-label="Search" 
+            value="{{ query|default:'' }}"/>
+            <button type="submit" class='btn btn-success' id='clear_search' style="display: none;">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </form>
+
+    </div>
+
+    {% if page_obj %}
+        {% for post in page_obj %}
+        <div class="card mb-3 shadow rounded-3">
+            <div class="card-header bg-dark text-light">
+                <span class='fw-bolder'>@{{post.author}}</span>
+            </div>
+            <div class="card-body d-flex justify-content-between">
+                <div>
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text text-secondary">{{post.description}}</p>
+                </div>
+                {% if post.author == user %}
+                <div>
+                    <a href="{% url 'update_post' post.id %}" class='btn btn-warning'>
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a href="{% url 'delete_post' post.id %}" class='btn btn-danger'>
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-header">
+                {{ post.created_at|date:"F j, Y" }}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-primary">No Post Available</div>
+    {% endif %}
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+
+            {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?{% if query %}q={{ query }}&{% endif %}page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+</div>
+
+{% endblock %}

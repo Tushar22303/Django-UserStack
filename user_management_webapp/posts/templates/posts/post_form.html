@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}UserStack - Post{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div>
+        <a href="{% url "post_list" %}" class='float-start'>Back</a>
+    {% if form.instance.pk %} 
+        <h2 class='text-center mb-3'>Update <span class='text-warning fst-italic'>UserStack</span> Post</h2>
+    {% else %}
+        <h2 class='text-center mb-3'>Create <span class='text-warning fst-italic'>UserStack</span> Post</h2>
+    {% endif %}
+    </div>
+
+    {% if success %}
+        {% if form.instance.pk %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Post updated successfully!
+            </div>
+        {% else %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Post created successfully!
+            </div>
+        {% endif %}
+
+        <script>
+            setTimeout(() => {
+                window.location.href = "{% url 'post_list' %}"
+            }, 1000)
+        </script>
+    {% endif %}
+
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.as_p }}
+            {% if form.instance.pk %}
+                <button type="submit" class="btn btn-success">Update</button>
+            {% else %}
+                <button type="submit" class="btn btn-success">Create</button>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}

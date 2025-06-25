@@ -1,0 +1,33 @@
+{% extends "base.html" %} 
+{% block title %}UserStack - Delete Post{% endblock %}
+{% block content %}
+<div class="container ">
+    {% if success %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">Post has been Deleted successfully!</div>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "{% url "post_list" %}"
+        }, 1500)
+    </script>
+    {% endif %}
+    
+    <div class="card text-center rounded-3 shadow mt-3">
+        <div class="card-header bg-dark">
+            <span class='text-light fs-2'>Are you sure, you want to delete the post?</span>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text text-secondary">
+                    {{post.description}}
+                </p>
+                <button class='btn btn-danger'>Delete</button>
+                <a href="{% url 'post_list' %}" class='btn btn-primary'>Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

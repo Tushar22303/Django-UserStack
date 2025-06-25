@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Django
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3
+media/
+*.db
+
+# Static files (but NOT static code or images)
+staticfiles/
+staticfiles_build/
+static/*.tmp
+
+# Keep image files in static
+!static/Images/
+!static/Images/**
+
+# Environment variables
+.env
+*.env
+
+# VSCode / IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Migrations (optional)
+**/migrations/*.pyc
+**/migrations/__pycache__/

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}UserStack - Profile{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- Profile Card -->
+            <div class="card shadow rounded-3">
+                <div class="card-header bg-dark text-white text-center">
+                    <h3 class="text-center"><span class='text-warning fst-italic'>UserStack</span> Profile</h3>
+                </div>
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3">
+                            <img src="{% static 'Images/profile.jpg' %}" alt="Profile"
+                                class="rounded-circle border border-2 border-secondary p-3" width="130" height="130">
+                        </div>
+                        <div>
+                            <h4 class="mb-0">{{ user.username }}</h4>
+                            <p class="text-muted mb-0">{{ user.email }}</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="text-center mt-3">
+                        <a href="{% url "update_profile_view" %}" class='btn btn-warning me-3'>Update Profile</a>
+                        <form action="{% url 'logout' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form> 
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

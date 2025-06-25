@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}UserStack - My Posts{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class='text-start mb-4'>My <span class='text-warning fst-italic'>UserStack</span> Post</h2>
+
+    {% if posts %}
+        {% for post in posts %}
+        <div class="card mb-3 shadow rounded-3">
+            <div class="card-header text-light bg-dark">
+                <span class='fw-bolder'>@{{post.author}}</span>
+            </div>
+            <div class="card-body d-flex justify-content-between">
+                <div>
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text text-secondary">{{post.description}}</p>
+                </div>
+                {% if post.author == user %}
+                <div>
+                    <a href="{% url 'update_post' post.id %}" class='btn btn-warning'>
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a href="{% url 'delete_post' post.id %}" class='btn btn-danger'>
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-header">
+                {{ post.created_at|date:"F j, Y" }}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-primary">No Post Available</div>
+    {% endif %}
+</div>
+
+{% endblock %}
